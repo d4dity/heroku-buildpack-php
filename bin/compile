@@ -440,4 +440,44 @@ SH
 
 chmod a+x "bin/run"
 
-sh $basedir/imagemagick-vulcan-build.sh
+export LIBPNG_VERSION="1.5.14"
+export IMAGE_MAGICK_VERSION="6.8.2-3"
+export REMOTE_PATH="imagemagick-${IMAGE_MAGICK_VERSION}.tgz"
+export LIBPNG_REMOTE_PATH="libpng-${LIBPNG_VERSION}.tgz"
+export S3_BUCKET="buildpack-imagemagick"
+
+# we need this directory, it's our destination
+lib_path=$BUILD_DIR/vendor/imagemagick/lib/
+mkdir -p $lib_path
+
+echo "Installing libpng $LIBPNG_VERSION" | arrow
+
+# vendor directories
+VENDORED_LIBPNG="$(mktmpdir libpng)"
+package_download "${REMOTE_PATH}" "${VENDORED_LIBPNG}"
+
+echo "Download completed" | indent
+
+cp -R $VENDORED_LIBPNG/lib/* $lib_path
+
+echo "Installation completed" | indent
+
+echo "Installing imagemagick $IMAGE_MAGICK_VERSION" | arrow
+
+# vendor directories
+VENDORED_IMAGEMAGICK="$(mktmpdir imagemagick)"
+package_download "${REMOTE_PATH}" "${VENDORED_IMAGEMAGICK}"
+
+echo "Download completed" | indent
+
+mkdir -p "$BUILD_DIR/bin/"
+cp $VENDORED_IMAGEMAGICK/bin/* "$BUILD_DIR/bin/"
+
+cp -R $VENDORED_IMAGEMAGICK/lib/* $lib_path
+
+echo "Installation completed" | indent
+
+echo "Building runtime environment for imagemagick" | arrow
+mkdir -p $BUILD_DIR/.profile.d
+echo "export PATH=\"\$HOME/bin:\$PATH\"" > $BUILD_DIR/.profile.d/imagemagick.sh
+echo "export LD_RUN_PATH=\"$lib_path:\$LD_RUN_PATH\"" > $BUILD_DIR/.profile.d/imagemagick.sh
