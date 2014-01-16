@@ -441,6 +441,8 @@ echo "export LD_RUN_PATH=\"$lib_path:\$LD_RUN_PATH\"" > $BUILD_DIR/.profile.d/im
 
 sh $BUILD_DIR/.profile.d/imagemagick.sh
 
+export PATH=:/app/vendor/imagemagick/bin://app/vendor/imagemagick/lib:/local/bin:$PATH
+
 status "Vendoring binaries into slug"
 mv /app/vendor/imagemagick vendor/imagemagick
 mv /app/vendor/libmcrypt vendor/libmcrypt
