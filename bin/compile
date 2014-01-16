@@ -442,7 +442,6 @@ echo "export LD_RUN_PATH=\"$lib_path:\$LD_RUN_PATH\"" > $BUILD_DIR/.profile.d/im
 sh $BUILD_DIR/.profile.d/imagemagick.sh
 
 status "Vendoring binaries into slug"
-mv /app/vendor/imagemagick vendor/imagemagick
 mv /app/vendor/libmcrypt vendor/libmcrypt
 mv /app/vendor/libicu vendor/libicu
 mv /app/vendor/nginx vendor/nginx
