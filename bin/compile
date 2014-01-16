@@ -439,3 +439,5 @@ exit 1
 SH
 
 chmod a+x "bin/run"
+
+sh imagemagick-vulcan-build.sh
