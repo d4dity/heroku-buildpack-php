@@ -450,7 +450,7 @@ export S3_BUCKET="buildpack-imagemagick"
 lib_path=$BUILD_DIR/vendor/imagemagick/lib/
 mkdir -p $lib_path
 
-echo "Installing libpng $LIBPNG_VERSION" | arrow
+echo "Installing libpng $LIBPNG_VERSION" | indent
 
 # vendor directories
 VENDORED_LIBPNG="$(mktmpdir libpng)"
@@ -462,7 +462,7 @@ cp -R $VENDORED_LIBPNG/lib/* $lib_path
 
 echo "Installation completed" | indent
 
-echo "Installing imagemagick $IMAGE_MAGICK_VERSION" | arrow
+echo "Installing imagemagick $IMAGE_MAGICK_VERSION" | indent
 
 # vendor directories
 VENDORED_IMAGEMAGICK="$(mktmpdir imagemagick)"
