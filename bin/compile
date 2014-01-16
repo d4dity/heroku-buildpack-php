@@ -440,4 +440,4 @@ SH
 
 chmod a+x "bin/run"
 
-sh imagemagick-vulcan-build.sh
+sh $basedir/imagemagick-vulcan-build.sh
