@@ -1,5 +1,5 @@
 #!/bin/sh
-. ./vulcan-helpers.sh
+
 
 IM_VERSION=6.7.4-10
 # goofy vulcan output naming convention
