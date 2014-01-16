@@ -446,6 +446,23 @@ export REMOTE_PATH="imagemagick-${IMAGE_MAGICK_VERSION}.tgz"
 export LIBPNG_REMOTE_PATH="libpng-${LIBPNG_VERSION}.tgz"
 export S3_BUCKET="buildpack-imagemagick"
 
+function mktmpdir() {
+  dir=$(mktemp -t imagemagick-$1-XXXX)
+  rm -rf $dir
+  mkdir -p $dir
+  echo $dir
+}
+
+function package_download() {
+  local remote location
+  remote="$1"
+  location="$2"
+
+  mkdir -p $location
+  package="http://s3.amazonaws.com/${S3_BUCKET}/${remote}"
+  curl $package -s -o - | tar xzf - -C $location
+}
+
 # we need this directory, it's our destination
 lib_path=$BUILD_DIR/vendor/imagemagick/lib/
 mkdir -p $lib_path
